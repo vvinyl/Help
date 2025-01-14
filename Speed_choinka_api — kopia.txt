@@ -1,0 +1,287 @@
+typescript
+
+class SpeedConverter {
+    private speedKmH: number;
+
+    constructor(speedKmH: number) {
+        this.speedKmH = speedKmH;
+    }
+
+    convertToMs(): number {
+        return this.speedKmH / 3.6;
+    }
+}
+
+// Przykład użycia:
+const converter = new SpeedConverter(90); // 90 km/h
+console.log(converter.convertToMs()); // Wypisuje wynik w m/s
+
+
+react
+
+import React, { useState } from 'react';
+
+const TriangleChecker: React.FC = () => {
+    const [side1, setSide1] = useState<number>(0);
+    const [side2, setSide2] = useState<number>(0);
+    const [side3, setSide3] = useState<number>(0);
+    const [message, setMessage] = useState<string>('');
+
+    const checkTriangle = () => {
+        if (side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1) {
+            setMessage('Można utworzyć trójkąt.');
+        } else {
+            setMessage('Nie można utworzyć trójkąta.');
+        }
+    };
+
+    return (
+        <div>
+            <input
+                type="number"
+                value={side1}
+                onChange={(e) => setSide1(Number(e.target.value))}
+                placeholder="Bok 1"
+            />
+            <input
+                type="number"
+                value={side2}
+                onChange={(e) => setSide2(Number(e.target.value))}
+                placeholder="Bok 2"
+            />
+            <input
+                type="number"
+                value={side3}
+                onChange={(e) => setSide3(Number(e.target.value))}
+                placeholder="Bok 3"
+            />
+            <button onClick={checkTriangle}>Sprawdź</button>
+            <p>{message}</p>
+        </div>
+    );
+};
+
+export default TriangleChecker;
+
+
+
+
+
+WebApi Program.cs
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Dodanie usług wymaganych do WebAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Użycie Swaggera do generowania dokumentacji API
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// Lista samochodów (tymczasowe przechowywanie danych w pamięci)
+var cars = new List<Car>
+{
+    new Car { VIN = "1HGBH41JXMN109186", Type = "Sedan", Brand = "Toyota", Model = "Corolla", Color = "Red" },
+    new Car { VIN = "2HGBH41JXMN109187", Type = "SUV", Brand = "Honda", Model = "CR-V", Color = "Blue" },
+    new Car { VIN = "3HGBH41JXMN109188", Type = "Coupe", Brand = "BMW", Model = "4 Series", Color = "Black" }
+};
+
+// Endpoint do pobierania samochodów
+app.MapGet("/cars", async context =>
+{
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(cars);
+});
+
+// Endpoint do dodawania samochodu
+app.MapPost("/cars", async (Car newCar, HttpContext context) =>
+{
+    if (newCar == null || string.IsNullOrWhiteSpace(newCar.VIN) || string.IsNullOrWhiteSpace(newCar.Type)
+        || string.IsNullOrWhiteSpace(newCar.Brand) || string.IsNullOrWhiteSpace(newCar.Model)
+        || string.IsNullOrWhiteSpace(newCar.Color))
+    {
+        context.Response.StatusCode = 400; // Bad Request
+        await context.Response.WriteAsync("Wszystkie pola są wymagane.");
+        return;
+    }
+
+    // Dodanie nowego samochodu do listy
+    cars.Add(newCar);
+    context.Response.StatusCode = 201; // Created
+    await context.Response.WriteAsJsonAsync(newCar);
+});
+
+app.Run();
+
+// Klasa reprezentująca samochód
+public class Car
+{
+    public string VIN { get; set; }
+    public string Type { get; set; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public string Color { get; set; }
+}
+
+
+
+
+Angular 
+
+
+component.ts
+
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+@Component({
+  selector: 'app-add-car',
+  templateUrl: './add-car.component.html',
+  styleUrls: ['./add-car.component.css']
+})
+export class AddCarComponent {
+  vin: string = '';
+  type: string = '';
+  brand: string = '';
+  model: string = '';
+  color: string = '';
+  message: string = '';
+
+  constructor(private http: HttpClient) {}
+
+  // Funkcja do wysyłania danych samochodu do API
+  addCar() {
+    const carData = {
+      vin: this.vin,
+      type: this.type,
+      brand: this.brand,
+      model: this.model,
+      color: this.color
+    };
+
+    this.http.post('http://localhost:5000/cars', carData)
+      .pipe(
+        catchError(err => {
+          this.message = 'Błąd połączenia z serwerem.';
+          return of(null); // Obsługuje błędy połączenia
+        })
+      )
+      .subscribe(response => {
+        if (response) {
+          this.message = 'Samochód został dodany pomyślnie!';
+          // Czyszczenie formularza po udanym dodaniu
+          this.vin = '';
+          this.type = '';
+          this.brand = '';
+          this.model = '';
+          this.color = '';
+        } else {
+          this.message = 'Błąd podczas dodawania samochodu.';
+        }
+      });
+  }
+}
+
+
+html
+
+
+<div>
+  <h2>Dodaj nowy samochód</h2>
+  <form (ngSubmit)="addCar()">
+    <div>
+      <label for="vin">VIN:</label>
+      <input type="text" id="vin" [(ngModel)]="vin" name="vin" required placeholder="Wprowadź VIN" />
+    </div>
+    <div>
+      <label for="type">Typ:</label>
+      <input type="text" id="type" [(ngModel)]="type" name="type" required placeholder="Wprowadź typ" />
+    </div>
+    <div>
+      <label for="brand">Marka:</label>
+      <input type="text" id="brand" [(ngModel)]="brand" name="brand" required placeholder="Wprowadź markę" />
+    </div>
+    <div>
+      <label for="model">Model:</label>
+      <input type="text" id="model" [(ngModel)]="model" name="model" required placeholder="Wprowadź model" />
+    </div>
+    <div>
+      <label for="color">Kolor:</label>
+      <input type="text" id="color" [(ngModel)]="color" name="color" required placeholder="Wprowadź kolor" />
+    </div>
+    <button type="submit">Dodaj samochód</button>
+  </form>
+
+  <p *ngIf="message">{{ message }}</p>
+</div>
+
+
+css
+
+div {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+input {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+p {
+  font-size: 1.2em;
+  color: green;
+  margin-top: 20px;
+}
+
+React trójkąt
+import {useState} from 'react'
+export const Trojkat = () => {
+    const [bokA, setBokA] = useState(0);
+    const [bokB, setBokB] = useState(0);
+    const [bokC, setBokC] = useState(0);
+    const [result, setResult] = useState('');
+
+    const checkTriangle = () => {
+        if(bokA + bokB > bokC && bokA + bokC > bokB){
+            setResult("Da sie")
+        } else {
+            setResult("Nie da sie")
+        }   
+    }
+    
+    return(
+        <div>
+            <label>Najdłuższy bok:</label><br/>
+            <input type="number" onChange={(e) => setBokA(Number(e.target.value))}/><br/>
+            <label>Krótszy bok:</label><br/>
+            <input type="number" onChange={(e) => setBokB(Number(e.target.value))}/><br/>
+            <label>Drugi krótszy bok:</label><br/>
+            <input type="number" onChange={(e) => setBokC(Number(e.target.value))}/><br/>
+            <button onClick={checkTriangle}>Klik</button>
+            <p>{result}</p>
+        </div>
+    )
+}
