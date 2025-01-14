@@ -285,3 +285,6 @@ export const Trojkat = () => {
         </div>
     )
 }
+
+
+PIERWIASTEK OZNA ZROBIC Math.Pow(value, 0.5)
