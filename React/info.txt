@@ -1,0 +1,13 @@
+Stworzenie aplikacji 
+    npm create vite
+Wpisać nazwę aplikacji, wybrać React i Typescript
+
+Przejść do folderu aplikacji
+    cd nazwa
+    npm install
+
+Uruchomienie aplikacji  
+    npm run dev
+
+Do stylowania biblioteka metrial
+    npm install @mui/material @emotion/react @emotion/styled @mui/icons-material

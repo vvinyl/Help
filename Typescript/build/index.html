@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: grey;">
+    <div>
+        <h1>4. Proszę stworzyć aplikację, która będzie zawierała pole typu input, oraz 2 przyciski "+" i "-". Przycisk "+"
+        powinien zwiększać wartość pola input o 1, a przycisk "-" zmniejszać o jeden. Aplikacja powinna być
+        przygotowana w sposób obiektowy.</h1>
+
+        <input id="counter" type="number" value="0" readonly>
+        <input type="button" id="increment" value="+">
+        <input type="button" id="decrement" value="-">
+        <input type="button" id="reset" value = 'Reset'>
+    </div>
+    <div>
+        <h1>5 + 6. Proszę stworzyć aplikację, która w momencie uruchomienia, pobierze asynchronicznie z serwera listę
+            autorów (plik dane.json) i zamieni ją na listę obiektów klasy Autor. Aplikacja powinna być oczywiście
+            stworzona w sposób obiektowy. + Proszę rozszerzyć poprzednią aplikację, tak aby umożliwiała wyświetlenie otrzymanych danych na ekranie
+            w formie listy</h1>
+        <section id="authors">
+
+        </section>
+    </div>
+    <h1>Luźne zadania</h1>
+    <section>
+        <p>1. Generowanie listy [min, max].</p>
+        <label for="len-input">Długość listy:</label>
+        <input type="number" id="len-input"/><br/><br/>
+        
+        <label for="min-input">Minimum:</label>
+        <input type="number" id="min-input"/><br/><br/>
+
+        <label for="max-input">Maximum</label>
+        <input type="number" id="max-input"/><br/><br/>
+
+        <button id="arr-btn">Generuj listę</button>
+        <p>Wynik:</p>
+        <p id="arr-result"></p>
+    </section>
+<hr/>
+    <section>
+        <p>2. Oblicz kwadrat i pierwiastek podanych liczb.</p>
+
+        <label for="value-input">Wartość:</label>
+        <input type="number" id="value-input"/><br/><br/>
+
+        <button id="calc-btn">Oblicz</button>
+        <p>Wynik:</p>
+        <p id="calc-result"></p>
+    </section>
+<hr/>
+    <section>
+        <p>3. Oblicz pole koła.</p>
+
+        <label for="radius-input">Promień:</label>
+        <input type="number" id="radius-input"/><br/><br/>
+
+        <button id="circle-btn">Oblicz</button>
+        <p>Wynik:</p>
+        <p id="circle-result"></p>
+    </section>
+<hr/>
+    <section>
+        <p>4. Wygeneruj ciąg Fibonacciego o wybranej ilości wyrazów.</p>
+
+        <label for="fibo-input">Ilość wyrazów:</label>
+        <input type="number" id="fibo-input"/><br/><br/>
+
+        <button id="fibo-btn">Oblicz</button>
+        <p>Wynik:</p>
+        <p id="fibo-result"></p>
+    </section>
+<hr/>
+</body>
+</html>

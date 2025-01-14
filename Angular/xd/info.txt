@@ -1,0 +1,34 @@
+Utworzenie projektuInstalacja angulara
+    npm install -g @angular/cli
+
+Utworzenie projektu
+    ng new Angl --minimal=true --standalone=false
+Wybrać CSS, a potem N
+
+Przejść do kaalogu z aplikacją
+    cd nazwa
+
+Uruchomienie projektu
+    ng serve --open
+
+Generowanie nowego komponentu
+    ng g c nazwa --standalone false
+
+w angular.json zmienić wartości:
+"@schematics/angular:component": {
+    "inlineTemplate": false,
+    "inlineStyle": false,
+    "skipTests": true
+}
+
+Instalacja @angular/material
+    ng add @angular/material
+
+Instalacja bootstrapa
+    npm install bootstrap
+
+Moduł do importów kontrolek
+    ng g m material
+
+Stworzenie klasy
+    ng generate class Model/Contact

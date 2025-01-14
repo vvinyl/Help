@@ -1,0 +1,60 @@
+Tworzenie projektu
+    npm init
+
+Żeby sie kompilowało
+    npm install -save-dev typescript ts-loader webpack webpack-cli webpack-dev-server html-webpack-plugin
+
+W katalogu głównym gdzie jest aplikacja tworzymy plik tsconfig.json
+
+{
+    "compilerOptions": {
+        "rootDir":"src",
+        "outDir": "build",
+        "target": "ES2020",
+        "moduleResolution": "node"
+    }
+}
+
+Potem w build stworzyć index.html z szablonem html i w src index.ts
+
+W tym samym miejscu co tsconfig.json, tworzymy plik webpack.config.js 
+
+let htmlWebpackPlugin = require(`html-webpack-plugin`);
+let path = require(`path`);
+module.exports = {
+    mode: `development`,
+    devtool: `source-map`,
+    entry: {
+    app: `./src/index.ts`
+},
+output: {
+    path: path.join(__dirname, `./build`),
+    filename: `bundle.js`
+},
+resolve: { extensions: [`.js`, `.ts`] },
+devServer: {
+    static: path.join(__dirname, `./build/`),
+    port: 9000
+},
+module: {
+    rules: [
+        { test: /\.ts$/, loader: `ts-loader` }
+    ]
+},
+plugins: [
+    new htmlWebpackPlugin({
+        hash: true,
+        title: `Nasza pierwsza aplikacja typescript`,
+        template: `./build/index.html`,
+        path: path.join(__dirname, `./build/`),
+        filename: `index.html`
+    })
+]
+}
+
+Do package.json dodać skrypty:
+"start": "webpack serve --config ./webpack.config.js",
+"build": "webpack --config ./webpack.config.js"
+
+Uruchamianie aplikacji
+    npm start
